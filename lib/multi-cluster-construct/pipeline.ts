@@ -25,10 +25,12 @@ export class PipelineMultiCluster {
 
         const CLUSTER_VERSIONS = [
             eks.KubernetesVersion.V1_24,
-            eks.KubernetesVersion.V1_25,
-            eks.KubernetesVersion.V1_26,
-            eks.KubernetesVersion.V1_27,
+            // eks.KubernetesVersion.V1_25,
+            // eks.KubernetesVersion.V1_26,
+            // eks.KubernetesVersion.V1_27,
         ]
+
+        const prodArgoAddonConfig = createArgoAddonConfig('prod', 'https://github.com/aws-samples/eks-blueprints-workloads.git');
 
         const addons: Array<blueprints.ClusterAddOn> = [
             new blueprints.addons.ExternalsSecretsAddOn(),
@@ -51,7 +53,8 @@ export class PipelineMultiCluster {
                    ],
               }],
             }),
-            new EksAnywhereSecretsAddon()
+            new EksAnywhereSecretsAddon(),
+            prodArgoAddonConfig
           ]; 
           
             const blueprint = blueprints.EksBlueprint.builder()
@@ -81,11 +84,10 @@ export class PipelineMultiCluster {
       )
       const gitRepositoryName = 'cdk-eks-blueprints-patterns';
 
-
         blueprints.CodePipelineStack.builder()
         .application('npx ts-node bin/pipeline-multienv-gitops.ts')
         .name('multi-cluster-central-pipeline')
-        .owner('aws-samples')
+        .owner('Howlla')
         .codeBuildPolicies(blueprints.DEFAULT_BUILD_POLICIES)
         .repository({
             repoUrl: gitRepositoryName,
@@ -146,3 +148,22 @@ export class PipelineMultiCluster {
     }
 }
 
+
+function createArgoAddonConfig(environment: string, repoUrl: string): blueprints.ArgoCDAddOn {
+    return new blueprints.ArgoCDAddOn(
+        {
+            bootstrapRepo: {
+                repoUrl: repoUrl,
+                path: `envs/${environment}`,
+                targetRevision: 'main',
+            },
+            bootstrapValues: {
+                spec: {
+                    ingress: {
+                        host: 'teamblueprints.com',
+                    }
+                },
+            },
+        }
+    );
+}
