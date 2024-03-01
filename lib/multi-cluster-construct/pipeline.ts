@@ -127,7 +127,7 @@ export class PipelineMultiCluster {
             .build(scope, "multi-cluster-central-pipeline", {
                 env: {
                     account: process.env.CDK_DEFAULT_ACCOUNT,
-                    region: process.env.CDK_DEFAULT_REGION,
+                    region: region,
                 }
             });
     }
