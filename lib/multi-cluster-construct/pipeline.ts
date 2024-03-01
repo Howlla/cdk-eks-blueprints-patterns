@@ -107,7 +107,7 @@ export class PipelineMultiCluster {
                 .clone(region, accountID)
         });
 
-        const gitOwner = 'howlla';
+        const gitOwner = 'Howlla';
         const gitRepositoryName = 'cdk-eks-blueprints-patterns';
 
         blueprints.CodePipelineStack.builder()
