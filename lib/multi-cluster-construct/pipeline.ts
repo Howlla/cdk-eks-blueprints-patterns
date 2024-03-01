@@ -14,7 +14,8 @@ export class PipelineMultiCluster {
 
     async buildAsync(scope: Construct) {
         const accountID = process.env.CDK_DEFAULT_ACCOUNT! ;
-        const region = process.env.CDK_DEFAULT_REGION! ;
+        const region = "us-west-2" ;
+       
 
         // environments IDs consts
         const X86_ENV_ID = `eks-x86-${region}`;
@@ -106,7 +107,7 @@ export class PipelineMultiCluster {
                 .clone(region, accountID)
         });
 
-        const gitOwner = 'aws-samples';
+        const gitOwner = 'howlla';
         const gitRepositoryName = 'cdk-eks-blueprints-patterns';
 
         blueprints.CodePipelineStack.builder()
@@ -116,8 +117,8 @@ export class PipelineMultiCluster {
             .codeBuildPolicies(blueprints.DEFAULT_BUILD_POLICIES)
             .repository({
                 repoUrl: gitRepositoryName,
-                credentialsSecretName: 'github-token',
-                targetRevision: 'main',
+                credentialsSecretName: 'github-token1',
+                targetRevision: 'deploymentC',
             })
             .wave({
                 id: "prod-test",

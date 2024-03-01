@@ -51,7 +51,7 @@ export REGION=<region>
 export AMG_ENDPOINT_URL=https://g-xyz.grafana-workspace.us-east-1.amazonaws.com
 export AMG_WS_ID=g-xyz
 
-aws ssm put-parameter --profile pipeline-account --region ${REGION} \
+aws ssm put-parameter --region ${REGION} \
     --type "SecureString" \
     --overwrite \
     --name "/cdk-accelerator/amg-context" \
