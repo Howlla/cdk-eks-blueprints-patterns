@@ -14,8 +14,7 @@ export class PipelineMultiCluster {
 
     async buildAsync(scope: Construct) {
         const accountID = process.env.CDK_DEFAULT_ACCOUNT! ;
-        const region = "us-west-2" ;
-       
+        const region = process.env.CDK_DEFAULT_REGION! ;
 
         // environments IDs consts
         const X86_ENV_ID = `eks-x86-${region}`;
@@ -127,7 +126,7 @@ export class PipelineMultiCluster {
             .build(scope, "multi-cluster-central-pipeline", {
                 env: {
                     account: process.env.CDK_DEFAULT_ACCOUNT,
-                    region: region,
+                    region: process.env.CDK_DEFAULT_REGION,
                 }
             });
     }
