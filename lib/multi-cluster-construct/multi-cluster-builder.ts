@@ -55,12 +55,6 @@ export default class MultiClusterBuilderConstruct {
         );
         doc = blueprints.utils.changeTextBetweenTokens(
             doc,
-            "{{ start enableIstioMonJob }}",
-            "{{ stop enableIstioMonJob }}",
-            true
-        );
-        doc = blueprints.utils.changeTextBetweenTokens(
-            doc,
             "{{ start enableAPIserverJob }}",
             "{{ stop enableAPIserverJob }}",
             true
@@ -92,9 +86,7 @@ export default class MultiClusterBuilderConstruct {
             __dirname + '/../common/resources/amp-config/java/alerting-rules.yml',
             __dirname + '/../common/resources/amp-config/java/recording-rules.yml',
             __dirname + '/../common/resources/amp-config/apiserver/recording-rules.yml',
-            __dirname + '/../common/resources/amp-config/nginx/alerting-rules.yml',
-            __dirname + '/../common/resources/amp-config/istio/alerting-rules.yml',
-            __dirname + '/../common/resources/amp-config/istio/recording-rules.yml'
+            __dirname + '/../common/resources/amp-config/nginx/alerting-rules.yml'
         );
         
 
