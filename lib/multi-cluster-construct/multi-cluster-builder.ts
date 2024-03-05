@@ -7,7 +7,6 @@ import { EksAnywhereSecretsAddon } from './eksa-secret-stores';
 import * as fs from 'fs';
 
 
-
 export default class MultiClusterBuilderConstruct {
     build(scope: Construct, id: string, workspaceName: string, account?: string, region?: string ) {
         // Setup platform team
@@ -129,7 +128,8 @@ export default class MultiClusterBuilderConstruct {
                     }],
                 }),
                 new EksAnywhereSecretsAddon(),
-                new blueprints.addons.SSMAgentAddOn()
+                new blueprints.addons.SSMAgentAddOn(),
+                new blueprints.addons.ClusterAutoScalerAddOn()
             );
     }
 }
