@@ -71,7 +71,7 @@ export default class MultiClusterBuilderConstruct {
             "{{ stop enableAdotMetricsCollectionTelemetry }}",
             true
         );
-
+        console.log(doc);
         fs.writeFileSync(__dirname + '/../common/resources/otel-collector-config-new.yml', doc);
 
         ampAddOnProps.openTelemetryCollector = {
