@@ -94,10 +94,17 @@ export default class MultiClusterBuilderConstruct {
 
         fs.writeFileSync(__dirname + '/../common/resources/otel-collector-config-new.yml', doc);
 
-        ampAddOnProps.enableAPIServerJob = true,
         ampAddOnProps.openTelemetryCollector = {
             manifestPath: __dirname + '/../common/resources/otel-collector-config-new.yml',
+            manifestParameterMap: {
+                logGroupName: `/aws/eks/conformitron/${ampWorkspaceName}`,
+                logStreamName: `$NODE_NAME`,
+                logRetentionDays: 30,
+                awsRegion: region 
+            }
         };
+        ampAddOnProps.enableAPIServerJob = true,
+
         ampAddOnProps.ampRules?.ruleFilePaths.push(
             __dirname + '/../common/resources/amp-config/apiserver/recording-rules.yml'
         );
