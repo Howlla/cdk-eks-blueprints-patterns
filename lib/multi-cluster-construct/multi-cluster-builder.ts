@@ -46,19 +46,19 @@ export default class MultiClusterBuilderConstruct {
             doc,
             "{{ start enableJavaMonJob }}",
             "{{ stop enableJavaMonJob }}",
-            true
+            false
         );
         doc = blueprints.utils.changeTextBetweenTokens(
             doc,
             "{{ start enableNginxMonJob }}",
             "{{ stop enableNginxMonJob }}",
-            true
+            false
         );
         doc = blueprints.utils.changeTextBetweenTokens(
             doc,
             "{{ start enableIstioMonJob }}",
             "{{ stop enableIstioMonJob }}",
-            true
+            false
         );
         doc = blueprints.utils.changeTextBetweenTokens(
             doc,
@@ -94,42 +94,12 @@ export default class MultiClusterBuilderConstruct {
 
         fs.writeFileSync(__dirname + '/../common/resources/otel-collector-config-new.yml', doc);
 
+        ampAddOnProps.enableAPIServerJob = true,
         ampAddOnProps.openTelemetryCollector = {
             manifestPath: __dirname + '/../common/resources/otel-collector-config-new.yml',
-            manifestParameterMap: {
-                javaScrapeSampleLimit: 1000,
-                javaPrometheusMetricsEndpoint: "/metrics"
-            }
         };
-        ampAddOnProps.ampRules?.ruleFilePaths.push(
-            __dirname + '/../common/resources/amp-config/java/alerting-rules.yml',
-            __dirname + '/../common/resources/amp-config/java/recording-rules.yml'
-        );
-
-        ampAddOnProps.enableAPIServerJob = true,
         ampAddOnProps.ampRules?.ruleFilePaths.push(
             __dirname + '/../common/resources/amp-config/apiserver/recording-rules.yml'
-        );
-        
-
-        ampAddOnProps.openTelemetryCollector = {
-            manifestPath: __dirname + '/../common/resources/otel-collector-config-new.yml',
-            manifestParameterMap: {
-                nginxScrapeSampleLimit: 1000,
-                nginxPrometheusMetricsEndpoint: "/metrics"
-            }
-        };
-        ampAddOnProps.ampRules?.ruleFilePaths.push(
-            __dirname + '/../common/resources/amp-config/nginx/alerting-rules.yml'
-        );
-        
-
-        ampAddOnProps.openTelemetryCollector = {
-            manifestPath: __dirname + '/../common/resources/otel-collector-config-new.yml'
-        };
-        ampAddOnProps.ampRules?.ruleFilePaths.push(
-            __dirname + '/../common/resources/amp-config/istio/alerting-rules.yml',
-            __dirname + '/../common/resources/amp-config/istio/recording-rules.yml'
         );
         
 
