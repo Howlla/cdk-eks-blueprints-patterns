@@ -79,6 +79,19 @@ export default class MultiClusterBuilderConstruct {
             true
         );
 
+        doc = blueprints.utils.changeTextBetweenTokens(
+            doc,
+            "{{ start enableAdotContainerLogsReceiver }}",
+            "{{ stop enableAdotContainerLogsReceiver }}",
+            true
+        );
+        doc = blueprints.utils.changeTextBetweenTokens(
+            doc,
+            "{{ start enableAdotContainerLogsExporter }}",
+            "{{ stop enableAdotContainerLogsExporter }}",
+            true
+        );
+
         fs.writeFileSync(__dirname + '/../common/resources/otel-collector-config-new.yml', doc);
 
         ampAddOnProps.openTelemetryCollector = {
@@ -111,13 +124,13 @@ export default class MultiClusterBuilderConstruct {
         );
         
 
-            ampAddOnProps.openTelemetryCollector = {
-                manifestPath: __dirname + '/../common/resources/otel-collector-config-new.yml'
-            };
-            ampAddOnProps.ampRules?.ruleFilePaths.push(
-                __dirname + '/../common/resources/amp-config/istio/alerting-rules.yml',
-                __dirname + '/../common/resources/amp-config/istio/recording-rules.yml'
-            );
+        ampAddOnProps.openTelemetryCollector = {
+            manifestPath: __dirname + '/../common/resources/otel-collector-config-new.yml'
+        };
+        ampAddOnProps.ampRules?.ruleFilePaths.push(
+            __dirname + '/../common/resources/amp-config/istio/alerting-rules.yml',
+            __dirname + '/../common/resources/amp-config/istio/recording-rules.yml'
+        );
         
 
         return blueprints.ObservabilityBuilder.builder()
